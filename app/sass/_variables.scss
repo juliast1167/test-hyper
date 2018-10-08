@@ -1,0 +1,109 @@
+/*Variables*/
+
+/*COLORS*/
+$default-color: #0E1C2B;
+// $default-darker: #242424;
+$hover-color: #D02CB1;
+$mark-color:#00A6D8;
+$color-red: #F74B3A;
+
+
+
+
+$secondary-color: #124734;
+$btn-color: #e55305;
+$btn-hover: #ee8227;
+$btn-secondary: #124734;
+$btn-lighter: #fbdd92;
+$secondary-darker: #0f2a8f;
+$gray-bg: #f0f1f1;
+$yellow: #f1da88;
+
+$error: red;
+
+/*ANIMATIONS*/
+@mixin anim{
+	transition: all .4s ease;
+}
+@mixin anim-linear{
+	transition: all .4s linear;
+}
+
+/*FONTS*/
+@mixin fblack {font-family: 'Gotham-Pro-Black',sans-serif;}
+@mixin fm {font-family: 'Raleway-Medium',sans-serif;}
+@mixin fb {font-family: 'Raleway-Bold',sans-serif;}
+@mixin feb {font-family: 'Raleway-ExtraBold',sans-serif;}
+@mixin fsb {font-family: 'Raleway-SemiBold',sans-serif;}
+@mixin fr {font-family: 'Raleway-Regular',sans-serif;}
+
+
+
+/*MEDIA QUERY*/
+@mixin reset($type){
+  $resets: (
+    ul: (
+      list-style: none,
+      margin: 0,
+      padding: 0,
+      li: (
+        margin: 0,
+        padding: 0,
+        )
+      )
+    );
+  @each $prop, $value in map-get($resets, $type) {
+    @if type-of($value) == 'map' {
+      & > #{$prop} {
+        @each $sub-prop, $sub-value in $value {
+          #{$sub-prop}: $sub-value;
+        }
+      }      
+    } @else {
+      #{$prop}: $value;
+    }
+  }
+}
+// @include reset(ul);
+@mixin respond-to($media) {
+  @if $media == phones {
+    @media only screen and (max-width: 480px) { @content; }
+  }
+  @else if $media == handhelds {
+    @media only screen and (max-width: 599px) { @content; }
+  }
+  @else if $media == wide-handhelds {
+    @media only screen and (max-width: 767px) { @content; }
+  }
+  @else if $media == tablets {
+    @media only screen and (max-width: 1023px) { @content; }
+  }
+  @else if $media == desktop {
+    @media only screen and (max-width: 1279px) { @content; }
+  }
+  @else if $media == desktop-lg {
+    @media only screen and (max-width: 1529px) { @content; }
+  }
+}
+
+
+//placeholder
+@mixin optional-at-root($sel){
+  @at-root #{if(not &, $sel, selector-append(&, $sel))}{
+    @content
+  }
+}
+@mixin placeholder{
+  @include optional-at-root('::-webkit-input-placeholder'){
+    @content
+  }
+  @include optional-at-root(':-moz-placeholder'){
+    @content
+  }
+  @include optional-at-root('::-moz-placeholder'){
+    @content
+  }
+  @include optional-at-root(':-ms-input-placeholder'){
+    @content
+  }
+}
